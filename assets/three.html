@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+        integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- 
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+<script defer src="https://pyscript.net/latest/pyscript.js"></script> -->
+    <!--      <script  src="./js/build/three.module.js"></script>-->
+    <!--      <script  src="./js/build/MeshReflectorMaterial.js"></script>-->
+    <!--      <script  src="./js/examples/jsm/three-master/three-csg.js"></script>-->
+    <!--      <script  src="./js/examples/jsm/lights/RectAreaLightUniformsLib.js"></script>-->
+    <!--      <script  src="./js/examples/jsm/loaders/OBJLoader.js"></script>-->
+    <!--      <script  src="./js/examples/jsm/loaders/GLTFLoader.js"></script>-->
+    <!--      <script  src="./js/examples/jsm/loaders/FontLoader.js"></script>-->
+    <!--      <script  src="./js/examples/jsm/controls/DragControls.js"></script>-->
+    <!--      <script  src="./js/examples/jsm/exporters/OBJExporter.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
+    <script src="./js/build/three.module.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+    <script src="./js/build/MeshReflectorMaterial.js"></script>
+    <script src="./js/examples/jsm/three-master/three-csg.js"></script>
+    <script src="./js/examples/jsm/lights/RectAreaLightUniformsLib.js"></script>
+    <script src="./js/examples/jsm/loaders/OBJLoader.js"></script>
+    <script src="./js/examples/jsm/loaders/GLTFLoader.js"></script>
+    <script src="./js/examples/jsm/loaders/FontLoader.js"></script>
+    <script src="./js/examples/jsm/controls/DragControls.js"></script>
+    <script src="./js/examples/jsm/exporters/OBJExporter.js"></script>
+
+    <script src="three.js" defer></script>
+    <!--    <script src="./js/test.js" defer></script>-->
+
+    <!--      <script  src="./js/examples/jsm/libs/stats.module.js"></script>-->
+</head>
+
+<body style="margin:0 !important;">
+<!-- 
+    <py-script> import xml.etree.ElementTree as ET
+
+
+        mytree = ET.parse('test1.ghx')
+        myroot = mytree.getroot()
+         
+        # iterating through the item values.
+        for items in myroot.iter('item'):
+        
+            if 'dt' in items.attrib:
+               if(items.attrib['name'] == 'Value'):
+                  print(items.attrib)      
+                  items.text = str(2)
+        
+        
+        mytree.write('output.ghx') </py-script> -->
+    <!--<img id="img_test" >-->
+    <!--<a  href="https://kitchendata.storage.googleapis.com/objects/BU-2 L.glb" >test Object</a>-->
+    <!-- <h1 id="flagTest" style="position: relative; text-align: center;"></h1>        -->
+    <canvas id="myCanvas" class="webgl"></canvas>
+    <input type="text" id="Left"
+        style="display: none;position: fixed;text-align: justify;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+    <input type="text" id="Right"
+        style="display: none;position: fixed;text-align: justify;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+    <input type="text" id="Front"
+        style="display: none;position: fixed;text-align: justify;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+    <input type="text" id="Back"
+        style="display: none;position: fixed;text-align: justify;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+    <input type="text" id="Top"
+        style="display: none;position: fixed;text-align: justify;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+    <input type="text" id="Bottom"
+        style="display: none;position: fixed;text-align: justify;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+    <input type="text" id="RightWall"
+        style="display: none;position: fixed;text-align: justify;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+    <input type="text" id="LeftWall"
+        style="display: none;position: fixed;text-align: justify;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+
+    <input type="text" id="es-Back"
+        style="display: none;position: fixed;text-align: center;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+    <input type="text" id="es-Front"
+        style="display: none;position: fixed;text-align: center;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+    <input type="text" id="es-Left"
+        style="display: none;position: fixed;text-align: center;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+    <input type="text" id="es-Right"
+        style="display: none;position: fixed;text-align: center;width: 70px; margin: 0% !important; transform: perspective(1px) scale(1, 1);"
+        placeholder="">
+
+    <!--<div id="container"></div>-->
+    <!--<canvas class="webgl"></canvas>-->
+    <!--<script >-->
+      
+   
+    <script>
+        var left = document.getElementById("Left");
+        left.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                var value = left.value;
+                // console.log("value " , value);
+
+                var numb = value.match(/\d/g);
+                // console.log("numb " , numb);
+                numb = numb.join("");
+                // console.log("numb " , numb);
+                window.applyChangeMeasures("Left", numb);
+
+            }
+        });
+
+        var right = document.getElementById("Right");
+        right.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                var value = right.value;
+                var numb = value.match(/\d/g);
+                numb = numb.join("");
+                window.applyChangeMeasures("Right", numb);
+
+            }
+        });
+
+        var back = document.getElementById("Back");
+        back.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                var value = back.value;
+                // console.log("value " , value);
+
+                var numb = value.match(/\d/g);
+                // console.log("numb " , numb);
+                numb = numb.join("");
+                // console.log("numb " , numb);
+
+                window.applyChangeMeasures("Back", numb);
+
+            }
+        });
+
+        var front = document.getElementById("Front");
+        front.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                var value = front.value;
+                var numb = value.match(/\d/g);
+                numb = numb.join("");
+                window.applyChangeMeasures("Front", numb);
+
+            }
+        });
+
+        var topB = document.getElementById("Top");
+        topB.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                var value = topB.value;
+                var numb = value.match(/\d/g);
+                numb = numb.join("");
+                window.applyChangeMeasures("Top", numb);
+
+            }
+        });
+        var bottom = document.getElementById("Bottom");
+        bottom.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                var value = bottom.value;
+                var numb = value.match(/\d/g);
+                numb = numb.join("");
+                window.applyChangeMeasures("Bottom", numb);
+
+            }
+        });
+        var rightWall = document.getElementById("RightWall");
+        rightWall.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                var value = rightWall.value;
+                var numb = value.match(/\d/g);
+                numb = numb.join("");
+                window.applyChangeMeasures("RightWall", numb);
+
+            }
+        });
+        var leftWall = document.getElementById("LeftWall");
+        leftWall.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                var value = leftWall.value;
+                var numb = value.match(/\d/g);
+                numb = numb.join("");
+                window.applyChangeMeasures("LeftWall", numb);
+
+            }
+        });
+
+        var esFront = document.getElementById("es-Front");
+        esFront.addEventListener('keypress', function (e) {
+            if (e.which === 13) {
+
+                window.updateDimensions(((esFront.value) / 1000) + 0.2, window.L);
+            }
+        });
+
+
+        var esBack = document.getElementById("es-Back");
+        esBack.addEventListener('keypress', function (e) {
+            if (e.which === 13) {
+
+
+
+                window.updateDimensions((esBack.value) / 1000 + 0.2, window.L);
+            }
+        });
+
+        var esLeft = document.getElementById("es-Left");
+        esLeft.addEventListener('keypress', function (e) {
+            if (e.which === 13) {
+
+
+
+                window.updateDimensions(window.W, (esLeft.value) / 1000 + 0.2);
+            }
+        });
+
+        var esRight = document.getElementById("es-Right");
+        esRight.addEventListener('keypress', function (e) {
+            if (e.which === 13) {
+
+
+                window.updateDimensions(window.W, (esRight.value) / 1000 + 0.2);
+            }
+        });
+
+        async function getScreenShot() {
+
+            let promiseWalls = new Promise(async (resolve, reject) => {
+                await window.screenShot();
+                setTimeout(() => resolve("done!"), 8000)
+            });
+            await promiseWalls;
+
+            let promiseEdges = new Promise(async (resolve, reject) => {
+                await window.screenShot2();
+                setTimeout(() => resolve("done!"), 8000)
+            });
+            await promiseEdges;
+
+            let promiseSides = new Promise(async (resolve, reject) => {
+                await window.screenShot3();
+                setTimeout(() => resolve("done!"), 6000)
+            });
+            await promiseSides;
+
+        }
+
+        async function downloadBase64File(contentType, base64Data, fileName) {
+            const linkSource = `data:${contentType};base64,${base64Data}`;
+            const downloadLink = document.createElement("a");
+            downloadLink.href = linkSource;
+            downloadLink.download = fileName;
+            downloadLink.click();
+
+        }
+
+    </script>
+
+
+
+</body>
+
+</html>
